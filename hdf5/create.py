@@ -4,11 +4,11 @@ import numpy as np
 import h5py
 import xml.dom.minidom
 
-PATH_ASSEMBLY = "/Reactor#000000001/Reactor/Assembly00000"
+PATH_ASSEMBLY = "/Reactor#000000001/Reactor/Assembly00000{:04}"
 PATH_HEADER = "/Reactor#000000001/Reactor/HEADER"
-PATH_DATA = "/Assembly/Rod0/RodTVEL/NC/MatrixCF/Data"
-PATH_HEADO = "/Assembly/HEAD0"
-PATH_MATRIX = "/Assembly/Rod0/RodTVEL/CMC/SectionPEL/CF000000001/MatrixCF/Data"
+PATH_DATA = "Assembly/Rod0/RodTVEL/NC/MatrixCF/Data"
+PATH_HEADO = "Assembly/HEAD0"
+PATH_MATRIX = "Assembly/Rod0/RodTVEL/CMC/SectionPEL/CF000000001/MatrixCF/Data"
 
 
 # т.к может быть разное к-во сборок
@@ -21,14 +21,14 @@ def for_all_dir(number, path):
     arr = []
     for i in range(1, deter_const(path) + 1):
         if number == 1:
-            data = PATH_ASSEMBLY + '{:04}'.format(i) + PATH_DATA
-            arr.append(data)
+            _hdf_path = PATH_DATA
         elif number == 2:
-            el = PATH_ASSEMBLY + '{:04}'.format(i) + PATH_MATRIX
-            arr.append(el)
+            _hdf_path = PATH_MATRIX
         else:
-            heado = PATH_ASSEMBLY + '{:04}'.format(i) + PATH_HEADO
-            arr.append(heado)
+            _hdf_path = PATH_HEADO
+        data = os.path.join(PATH_ASSEMBLY, current_path).format(i)
+        arr.append(data)
+
     return arr
 
 
